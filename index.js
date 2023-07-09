@@ -78,8 +78,9 @@ class MicGoXLRFader {
       console.log(data);
       const num = data.data.Status.mixers.S210500771CQK.levels.volumes.Mic;
       console.log(num);
-      callback(null, Math.round((num / 255) * 100));
-      await goxlrInstance.close();
+      const brightness = Math.round((num / 255) * 100);
+      console.log(brightness);
+      callback(null, brightness);
     } catch (error) {
       this.log.error("Failed to get light fader brightness:", error);
       callback(error);
