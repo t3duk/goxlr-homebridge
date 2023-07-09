@@ -7,7 +7,7 @@ var currentStatus = null;
   currentStatus = await goxlrInstance.getStatus();
   setInterval(async () => {
     currentStatus = await goxlrInstance.getStatus();
-  }, 1000);
+  }, 2500);
 })();
 
 module.exports = (api) => {
