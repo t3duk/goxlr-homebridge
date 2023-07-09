@@ -5,7 +5,8 @@ const goxlrInstance = new goxlr("192.168.0.125", 14564);
 (async () => {
   const data = await goxlrInstance.getStatus();
   console.log(data);
-  await goxlrInstance.close();
+  const num = data.data.Status.mixers.S210500771CQK.levels.volumes.Mic;
+  console.log(Math.round((num / 255) * 100));
 })();
 
 module.exports = (api) => {
