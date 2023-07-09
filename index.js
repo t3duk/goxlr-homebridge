@@ -2,6 +2,12 @@ const { Service, Characteristic } = require("homebridge");
 const { goxlr } = require("goxlr");
 const goxlrInstance = new goxlr("192.168.0.125", 14564);
 
+(async () => {
+  const data = await goxlrInstance.getStatus();
+  console.log(data);
+  await goxlrInstance.close();
+})();
+
 module.exports = (api) => {
   api.registerAccessory("MicGoXLRFader", MicGoXLRFader);
 };
