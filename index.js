@@ -75,6 +75,7 @@ class MicGoXLRFader {
   async handleBrightnessGet(callback) {
     try {
       console.log("GLFB | Getting light fader brightness...");
+      setTimeout(() => {}, 100);
       const data = await goxlrInstance.getStatus();
       console.log("GLFB | " + data);
       const num = data.data.Status.mixers.S210500771CQK.levels.volumes.Mic;
