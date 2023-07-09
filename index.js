@@ -6,9 +6,6 @@ var currentStatus = null;
 (async () => {
   setInterval(async () => {
     currentStatus = await goxlrInstance.getStatus();
-    console.log(
-      currentStatus.data.Status.mixers.S210500771CQK.button_down.Fader1Mute
-    );
   }, 1000);
 })();
 
@@ -39,17 +36,10 @@ class MicGoXLRFader {
   // Method to handle GET requests for the On characteristic
   async handleOnGet(callback) {
     try {
-      console.log("GLFS | Getting light fader state...");
       const status = currentStatus;
-      console.log("GLFS | " + status);
-      console.log(
-        "GLFS | " +
-          status.data.Status.mixers.S210500771CQK.button_down.Fader1Mute
-      );
-      callback(
-        null,
-        status.data.Status.mixers.S210500771CQK.button_down.Fader1Mute
-      );
+      if (status.data.Status.mixers.S210500771CQK.levels.volumes.Mic == 0) {
+        callback(null, false);
+      } else callback(null, true);
     } catch (error) {
       this.log.error("Failed to get light fader state:", error);
       callback(error);
