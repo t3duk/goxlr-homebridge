@@ -1,6 +1,6 @@
 const { Service, Characteristic } = require("homebridge");
 const { goxlr } = require("goxlr");
-const goxlrInstance = new goxlr();
+const goxlrInstance = new goxlr("192.168.0.125", 14564);
 
 module.exports = (api) => {
   api.registerAccessory("MicGoXLRFader", MicGoXLRFader);
