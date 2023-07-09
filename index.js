@@ -6,6 +6,9 @@ var currentStatus = null;
 (async () => {
   setInterval(async () => {
     currentStatus = await goxlrInstance.getStatus();
+    console.log(
+      currentStatus.data.Status.mixers.S210500771CQK.button_down.Fader1Mute
+    );
   }, 1000);
 })();
 
