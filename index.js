@@ -6,6 +6,7 @@ var currentStatus = null;
 (async () => {
   setInterval(async () => {
     currentStatus = await goxlrInstance.getStatus();
+    console.log(currentStatus);
   }, 1000);
 })();
 
