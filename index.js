@@ -1,12 +1,12 @@
 const { Service, Characteristic } = require("homebridge");
 const { goxlr } = require("goxlr");
 const goxlrInstance = new goxlr("192.168.0.125", 14564);
+var currentStatus = null;
 
 (async () => {
-  const data = await goxlrInstance.getStatus();
-  console.log(data);
-  const num = data.data.Status.mixers.S210500771CQK.levels.volumes.Mic;
-  console.log(Math.round((num / 255) * 100));
+  setInterval(async () => {
+    currentStatus = await goxlrInstance.getStatus();
+  }, 1000);
 })();
 
 module.exports = (api) => {
@@ -37,7 +37,7 @@ class MicGoXLRFader {
   async handleOnGet(callback) {
     try {
       console.log("GLFS | Getting light fader state...");
-      const status = await goxlrInstance.getStatus();
+      const status = currentStatus;
       console.log("GLFS | " + status);
       console.log(
         "GLFS | " +
@@ -75,8 +75,7 @@ class MicGoXLRFader {
   async handleBrightnessGet(callback) {
     try {
       console.log("GLFB | Getting light fader brightness...");
-      setTimeout(() => {}, 100);
-      const data = await goxlrInstance.getStatus();
+      const data = currentStatus;
       console.log("GLFB | " + data);
       const num = data.data.Status.mixers.S210500771CQK.levels.volumes.Mic;
       console.log("GLFB | " + num);
