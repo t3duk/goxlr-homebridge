@@ -29,15 +29,11 @@ class MicGoXLRFader {
   // Method to handle GET requests for the On characteristic
   async handleOnGet(callback) {
     try {
-      async function getOnOffState() {
-        const status = await goxlrInstance.getStatus();
-        const mic =
-          status.data.Status.mixers.S210500771CQK.button_down.Fader1Mute;
-        return mic;
-      }
-      const state = await getOnOffState();
-      callback(null, state);
-      await goxlrInstance.close();
+      const status = await goxlrInstance.getStatus();
+      callback(
+        null,
+        status.data.Status.mixers.S210500771CQK.button_down.Fader1Mute
+      );
     } catch (error) {
       this.log.error("Failed to get light fader state:", error);
       callback(error);
@@ -47,18 +43,12 @@ class MicGoXLRFader {
   // Method to handle SET requests for the On characteristic
   async handleOnSet(value, callback) {
     try {
-      async function toggleOnOffState(value) {
-        if (value == true) {
-          await goxlrInstance.setFaderMuteState("A", "Unmuted");
-          return true;
-        } else {
-          await goxlrInstance.setFaderMuteState("A", "MutedToX");
-          return true;
-        }
+      if (value == true) {
+        await goxlrInstance.setFaderMuteState("A", "Unmuted");
+      } else {
+        await goxlrInstance.setFaderMuteState("A", "MutedToX");
       }
-      await toggleOnOffState(value);
       callback(null);
-      await goxlrInstance.close();
     } catch (error) {
       this.log.error("Failed to set light fader state:", error);
       callback(error);
@@ -68,14 +58,9 @@ class MicGoXLRFader {
   // Method to handle GET requests for the Brightness characteristic
   async handleBrightnessGet(callback) {
     try {
-      async function getBrigtbess() {
-        const data = await goxlrInstance.getStatus();
-        const num = data.data.Status.mixers.S210500771CQK.levels.volumes.Mic;
-        const brightness = Math.round((num / 255) * 100);
-        return brightness;
-      }
-      const brightness = await getBrigtbess();
-      callback(null, brightness);
+      const data = await goxlrInstance.getStatus();
+      const num = data.data.Status.mixers.S210500771CQK.levels.volumes.Mic;
+      callback(null, Math.round((num / 255) * 100));
       await goxlrInstance.close();
     } catch (error) {
       this.log.error("Failed to get light fader brightness:", error);
@@ -86,12 +71,8 @@ class MicGoXLRFader {
   // Method to handle SET requests for the Brightness characteristic
   async handleBrightnessSet(value, callback) {
     try {
-      async function setBrightness(value) {
-        await goxlrInstance.setVolume("Mic", value);
-      }
-      await setBrightness(value);
+      await goxlrInstance.setVolume("Mic", value);
       callback(null);
-      await goxlrInstance.close();
     } catch (error) {
       this.log.error("Failed to set light fader brightness:", error);
       callback(error);
