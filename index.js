@@ -4,7 +4,7 @@ const goxlrInstance = new goxlr("192.168.0.125", 14564);
 var currentStatus = null;
 
 (async () => {
-  await goxlrInstance.getStatus();
+  currentStatus = await goxlrInstance.getStatus();
   setInterval(async () => {
     currentStatus = await goxlrInstance.getStatus();
   }, 1000);
