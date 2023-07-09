@@ -33,13 +33,11 @@ class MicGoXLRFader {
         const status = await goxlrInstance.getStatus();
         const mic =
           status.data.Status.mixers.S210500771CQK.button_down.Fader1Mute;
-        // const chat = status.data.Status.mixers.S210500771CQK.button_down.Fader2Mute;
-        // const music = status.data.Status.mixers.S210500771CQK.button_down.Fader3Mute;
-        // const system = status.data.Status.mixers.S210500771CQK.button_down.Fader4Mute;
         return mic;
       }
       const state = await getOnOffState();
       callback(null, state);
+      await goxlrInstance.close();
     } catch (error) {
       this.log.error("Failed to get light fader state:", error);
       callback(error);
@@ -60,6 +58,7 @@ class MicGoXLRFader {
       }
       await toggleOnOffState(value);
       callback(null);
+      await goxlrInstance.close();
     } catch (error) {
       this.log.error("Failed to set light fader state:", error);
       callback(error);
@@ -77,6 +76,7 @@ class MicGoXLRFader {
       }
       const brightness = await getBrigtbess();
       callback(null, brightness);
+      await goxlrInstance.close();
     } catch (error) {
       this.log.error("Failed to get light fader brightness:", error);
       callback(error);
@@ -91,6 +91,7 @@ class MicGoXLRFader {
       }
       await setBrightness(value);
       callback(null);
+      await goxlrInstance.close();
     } catch (error) {
       this.log.error("Failed to set light fader brightness:", error);
       callback(error);
