@@ -1,5 +1,5 @@
 {
-  "name": "goxlr-homebridge",
+  "name": "homebridge-goxlr",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
